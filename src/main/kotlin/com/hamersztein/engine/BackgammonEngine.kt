@@ -9,6 +9,10 @@ class BackgammonEngine(private val board: Board = Board()) {
         board.setup()
     }
 
+    fun isMovePossible(colour: Colour, from: Int, to: Int): Boolean {
+        return board.isMovePossible(colour, from, to)
+    }
+
     fun movePiece(colour: Colour, from: Int, to: Int) {
         board.movePiece(colour, from, to)
     }

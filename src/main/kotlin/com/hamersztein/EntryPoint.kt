@@ -11,7 +11,7 @@ fun main(args: Array<String>) {
 
     engine.movePiece(Colour.DARK, 23, 20)
 
-    engine.movePiece(Colour.LIGHT, 5, 3)
+//    engine.movePiece(Colour.LIGHT, 5, 3)
 
     // TODO - which index is the bar?
     // engine.movePiece(Colour.DARK, 24, 20)

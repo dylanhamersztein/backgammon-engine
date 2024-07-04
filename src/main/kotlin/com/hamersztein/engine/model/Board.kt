@@ -17,6 +17,10 @@ class Board(private val size: Int = 24) {
         }
     }
 
+    fun isMovePossible(colour: Colour, from: Int, to: Int) = getPlayerAwarePoints(colour, from, to).let { (_, to) ->
+        spaces[to].canMoveHere()
+    }
+
     fun movePiece(colour: Colour, from: Int, to: Int) {
         val (playerAwareFrom, playerAwareTo) = getPlayerAwarePoints(colour, from, to)
 
