@@ -3,17 +3,17 @@ package com.hamersztein.engine.model
 import com.hamersztein.engine.model.Colour.DARK
 import com.hamersztein.engine.model.Colour.LIGHT
 
-class Board(private val size: Int = 24) {
-    private val bar = Bar()
-    private val spaces = Array(size) { Space() }
-
+class Board(
+    private val bar: Bar = Bar(),
+    private val spaces: Array<Space> = Array(BOARD_SIZE) { Space() }
+) {
     fun setup() {
-        arrayOf(5 to 5, 7 to 3, 12 to 5, (size - 1) to 2).forEach { (position, pieceCount) ->
+        arrayOf(5 to 5, 7 to 3, 12 to 5, (BOARD_SIZE - 1) to 2).forEach { (position, pieceCount) ->
             spaces[position].colour = DARK
             spaces[position].count = pieceCount
 
-            spaces[size - position - 1].colour = LIGHT
-            spaces[size - position - 1].count = pieceCount
+            spaces[BOARD_SIZE - position - 1].colour = LIGHT
+            spaces[BOARD_SIZE - position - 1].count = pieceCount
         }
     }
 
@@ -32,7 +32,7 @@ class Board(private val size: Int = 24) {
         append("\n")
 
         // top half from light perspective
-        val upperRowRange = 0 until 5
+        val upperRowRange = 0 until 6
         val upperColumnRange = 11 downTo 0
         val upperBarIndex = 5
         printSection(upperRowRange, upperColumnRange, upperBarIndex)
@@ -40,8 +40,8 @@ class Board(private val size: Int = 24) {
         printBar()
 
         // bottom half from light perspective
-        val lowerRowRange = 4 downTo 0
-        val lowerColumnRange = 12..<size
+        val lowerRowRange = 5 downTo 0
+        val lowerColumnRange = 12..<BOARD_SIZE
         val lowerBarIndex = 18
         printSection(lowerRowRange, lowerColumnRange, lowerBarIndex)
 
@@ -53,7 +53,7 @@ class Board(private val size: Int = 24) {
         from: Int,
         to: Int
     ) {
-        if (from == size + 1) {
+        if (from == BOARD_SIZE + 1) {
             bar.removePiece(colour)
         } else {
             spaces[from].count--
@@ -76,8 +76,8 @@ class Board(private val size: Int = 24) {
         from: Int,
         to: Int
     ): Pair<Int, Int> {
-        val playerAwareFrom = if (colour == DARK) from else size - from - 1
-        val playerAwareTo = if (colour == DARK) to else size - to - 1
+        val playerAwareFrom = if (colour == DARK) from else BOARD_SIZE - from - 1
+        val playerAwareTo = if (colour == DARK) to else BOARD_SIZE - to - 1
 
         return playerAwareFrom to playerAwareTo
     }
@@ -110,6 +110,10 @@ class Board(private val size: Int = 24) {
         append("L".repeat(bar.numLight))
         append("-".repeat(numSurroundingHyphens))
         append("\n")
+    }
+
+    companion object {
+        private const val BOARD_SIZE: Int = 24
     }
 }
 

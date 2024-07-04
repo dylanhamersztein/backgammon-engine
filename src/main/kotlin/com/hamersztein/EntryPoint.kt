@@ -1,23 +1,46 @@
 package com.hamersztein
 
 import com.hamersztein.engine.BackgammonEngine
-import com.hamersztein.engine.model.Colour
+import com.hamersztein.engine.model.Colour.DARK
+import com.hamersztein.engine.model.Colour.LIGHT
+import com.hamersztein.engine.model.DiceThrow
 
 fun main(args: Array<String>) {
     val engine = BackgammonEngine()
     engine.setup()
 
-    engine.movePiece(Colour.LIGHT, 5, 3)
+    var currentPlayer = LIGHT
+    var thrownDice: DiceThrow
 
-    engine.movePiece(Colour.DARK, 23, 20)
+    while (true) {
+        thrownDice = engine.throwDice()
 
-//    engine.movePiece(Colour.LIGHT, 5, 3)
+        println("$currentPlayer rolled ${thrownDice.left} and ${thrownDice.right}")
 
-    // TODO - which index is the bar?
-    // engine.movePiece(Colour.DARK, 24, 20)
+        when {
+            thrownDice.difference == 2 -> {
+                engine.movePiece(currentPlayer, 8, 8 - thrownDice.larger)
+                engine.movePiece(currentPlayer, 6, 6 - thrownDice.smaller)
+            }
 
-    println()
-    println()
+            thrownDice.isDouble -> {
+                engine.movePiece(currentPlayer, 8, 8 - thrownDice.left)
+                engine.movePiece(currentPlayer, 8, 8 - thrownDice.left)
 
-    println(engine.toString())
+                engine.movePiece(currentPlayer, 13, 13 - thrownDice.left)
+                engine.movePiece(currentPlayer, 13, 13 - thrownDice.left)
+            }
+
+            else -> {
+                engine.movePiece(currentPlayer, 24, 24 - thrownDice.total)
+            }
+        }
+
+        println(engine.toString())
+        println("---")
+        println()
+
+        currentPlayer = if (currentPlayer == LIGHT) DARK else LIGHT
+        Thread.sleep(5000)
+    }
 }
