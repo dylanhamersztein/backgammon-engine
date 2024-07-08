@@ -4,7 +4,7 @@ import com.hamersztein.engine.model.DiceThrow
 import kotlin.random.Random
 
 class DiceThrower(
-    private var throwCount: Int = 0,
+    var throwCount: Int = 0,
     private val thrownDice: Array<DiceThrow> = Array(200) { DiceThrow(Random.nextInt(1, 7), Random.nextInt(1, 7)) }
 ) {
 

@@ -8,6 +8,8 @@ class Board(
     private val spaces: Array<Space> = Array(BOARD_SIZE) { Space() }
 ) {
     fun setup() {
+        spaces.forEach(Space::reset)
+
         arrayOf(5 to 5, 7 to 3, 12 to 5, (BOARD_SIZE - 1) to 2).forEach { (position, pieceCount) ->
             spaces[position].colour = DARK
             spaces[position].count = pieceCount
