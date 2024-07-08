@@ -5,7 +5,7 @@ import com.hamersztein.engine.model.Colour.DARK
 import com.hamersztein.engine.model.Colour.LIGHT
 import com.hamersztein.engine.model.DiceThrow
 
-fun main(args: Array<String>) {
+fun main() {
     val engine = BackgammonEngine()
     engine.setup()
 
@@ -36,7 +36,7 @@ fun main(args: Array<String>) {
             }
         }
 
-        println(engine.toString())
+        println(engine)
         println("---")
         println()
 
